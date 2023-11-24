@@ -8,9 +8,8 @@ export default function App() {
 	const timeToDisplay = (timeCount / 100).toFixed(2)
 	
 /*------Add the missing states below!----------------------------*/
-
-
-
+	const [cursorInButton,setCursorInButton] = React.useState(false)
+	const [buttonHeldDown, setButtonHeldDown] = React.useState(false)
 /*------Add the missing states above!----------------------------*/
 	
 	const buttonClass = !timeCount ? "outsideButton" : undefined
@@ -52,11 +51,28 @@ export default function App() {
 	}
 
 /*------Add the event handlers below!----------------------------*/
+
+	const handleMouseEvents = (event) =>{
+		switch(event.type){
+			case "mouseenter":
+				setCursorInButton(true)
+				break;
+			case "mouseleave":
+				setCursorInButton(false)
+				break;
+			case "mousedown":
+				setButtonHeldDown(true)
+				break;
+			case "mouseup":
+				setButtonHeldDown(false)
+				break;
+		}
+	}
 	return (
-		<div className="wrapper">
+		<div className="wrapper" >
 			<Header time={+timeToDisplay} />
 			<Thermometer time={+timeToDisplay} />
-			<button className={buttonClass}>Hold Down</button>
+			<button className={buttonClass} onMouseEnter={handleMouseEvents} onMouseDown={handleMouseEvents} onMouseUp={handleMouseEvents} onMouseLeave={handleMouseEvents}>Hold Down</button>
 			<p className="time">{timeToDisplay} seconds </p>
 		</div>
 	)
